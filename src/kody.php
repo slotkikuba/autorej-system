@@ -23,4 +23,39 @@
         return [$result, $numberOfRows];
     };
 
+    function logIn($conn, $login, $password) {
+        $query = "SELECT * FROM uzytkownicy WHERE nazwa = '$login'";
+        $result = mysqli_query($conn, $query);
+        $user = mysqli_fetch_assoc($result);
+        
+        if($user && password_verify($password, $user['haslo'])) {
+            $_SESSION['user_id'] = $user['id'];
+            $_SESSION['role'] = $user['rola'];
+            $_SESSION['flash_message'] = 'Pomyślnie zalogowano';
+            return true;
+        }
+
+        return false;
+
+    };
+
+    function register($conn, $login, $password) {
+        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+        $query = "INSERT INTO uzytkownicy (nazwa, haslo) VALUES
+        ('$login', '$hashedPassword')";
+
+        $registered = mysqli_query($conn, $query);
+
+        if($registered) {
+            $_SESSION['flash_message'] = 'Pomyślnie zarejestrowano';
+        }
+
+        return $registered;
+    }
+
+    function logout() {
+        session_unset();
+        session_destroy();
+    }
+
 ?>

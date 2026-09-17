@@ -1,4 +1,30 @@
-<?php include 'kody.php'; ?>
+<?php
+    include 'kody.php';
+
+    if(isset($_POST['logout'])) {
+        logout();
+        header('Location: index.php');
+        exit;
+    }
+
+    if(isset($_POST['loginUsername'], $_POST['loginPassword'])) {
+        $login = $_POST['loginUsername'];
+        $password = $_POST['loginPassword'];
+
+        if(logIn($conn, $login, $password)) {
+            header('Location: index.php');
+            exit;
+        }
+    }
+
+    $statusClass = "guest";
+    $statusText = "GOŚĆ";
+
+    if(isset($_SESSION['role'])) {
+        $statusClass = $_SESSION['role'];
+        $statusText = strtoupper($_SESSION['role']);
+    }
+?>  
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,7 +44,9 @@
                     <span>SYSTEM ZARZĄDZANIA POJAZDAMI</span>
                 </div>
             </div>
-            <span class="status-badge">STATUS: GOŚĆ</span>
+            <?php
+                echo '<span class="status-badge '.$statusClass.'">STATUS: '. $statusText.'</span>';
+            ?>
         </div>
     </header>
     <nav class="main-nav">
@@ -29,7 +57,6 @@
             <a href="usun.php">Usuń</a>
         </div>
     </nav>
-
     <main class="search-container">
 
         <div class="divider-header">

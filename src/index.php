@@ -1,4 +1,44 @@
-<?php include 'kody.php'; ?>
+<?php
+    include 'kody.php';
+
+    if(isset($_POST['logout'])) {
+        logout();
+        header('Location: index.php');
+        exit;
+    }
+
+    if(isset($_POST['loginUsername'], $_POST['loginPassword'])) {
+        $login = $_POST['loginUsername'];
+        $password = $_POST['loginPassword'];
+
+        if(logIn($conn, $login, $password)) {
+            header('Location: index.php');
+            exit;
+        }
+    }
+
+    if(isset($_POST['registerUsername'], $_POST['registerPassword'])) {
+        $login = $_POST['registerUsername'];
+        $password = $_POST['registerPassword'];
+
+        if(register($conn, $login, $password)) {
+            header('Location: index.php');
+            exit;
+        }
+    }
+
+    $statusClass = "guest";
+    $statusText = "GOŚĆ";
+
+    $flashMessage = $_SESSION['flash_message'] ?? null;
+    unset($_SESSION['flash_message']);
+
+    if(isset($_SESSION['role'])) {
+        $statusClass = $_SESSION['role'];
+        $statusText = strtoupper($_SESSION['role']);
+    }
+?>  
+
 <!DOCTYPE html>
 <html lang="pl">
 <head>
@@ -19,7 +59,9 @@
                     <span>SYSTEM ZARZĄDZANIA POJAZDAMI</span>
                 </div>
             </div>
-            <span class="status-badge">STATUS: GOŚĆ</span>
+            <?php
+                echo '<span class="status-badge '.$statusClass.'">STATUS: '. $statusText.'</span>';
+            ?>
         </div>
     </header>
     <nav class="main-nav">
@@ -78,19 +120,29 @@
                     </li>
                 </ul>
             </div>
-
+            <?php if($flashMessage): ?>
+                <div class="pop-up" role="status">
+                    <?= htmlspecialchars($flashMessage, ENT_QUOTES, 'UTF-8') ?>
+                </div>
+            <?php endif; ?>
             <div class="card right">
                 <span class="section-tag">02 / PANEL DOSTĘPU</span>
 
                 <div class="login-form">
                     <form action="index.php" method="post">
                         <label for="loginUsername">LOGIN</label>
-                        <input type="text" name="login" id="loginUsername" placeholder="Wpisz login" required>
+                        <input type="text" name="loginUsername" id="loginUsername" placeholder="Wpisz login" required>
 
                         <label for="loginPassword">HASŁO</label>
-                        <input type="password" name="password" id="loginPassword" placeholder="Wpisz hasło" required>
+                        <input type="password" name="loginPassword" id="loginPassword" placeholder="Wpisz hasło" required>
 
-                        <button type="submit">Zaloguj</button>
+                        <div class="login-actions">
+                            <button type="submit">Zaloguj</button>
+                            <?php if(isset($_SESSION['user_id'])): ?>
+                                <button type="submit" name="logout" value="1" formnovalidate>Wyloguj</button>
+                            <?php endif; ?>
+                        </div>
+
                     </form>
                     <span class="demo-hint">Nie masz konta? <button id="registerBtn" type="button">Zarejestruj się</button></span>
                 </div>  
@@ -104,6 +156,7 @@
                         <input type="password" name="registerPassword" id="registerPassword" placeholder="Wpisz hasło" required>
 
                         <button type="submit">Załóż konto</button>
+
                     </form>
                     <span class="demo-hint">Masz już konto? <button id="loginBtn" type="button">Zaloguj się</button></span>
                 </div>  

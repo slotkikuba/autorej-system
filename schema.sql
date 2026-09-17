@@ -23,5 +23,6 @@ INSERT INTO `pojazdy` (`vin`, `marka`, `model`, `rok_produkcji`, `kolor`) VALUES
 CREATE TABLE IF NOT EXISTS `uzytkownicy` (
     `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     `nazwa` VARCHAR(20) NOT NULL UNIQUE,
-    `haslo` VARCHAR(255) NOT NULL
+    `haslo` VARCHAR(255) NOT NULL,
+    `rola` VARCHAR(6) NOT NULL DEFAULT 'user'
 );
