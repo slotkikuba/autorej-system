@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/x-icon" href="/assets/icon.svg">
     <title>AutoRej.sys - System Zarządzania Pojazdami</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style/style.css">
 </head>
 <body>
 
@@ -82,16 +82,32 @@
             <div class="card right">
                 <span class="section-tag">02 / PANEL DOSTĘPU</span>
 
-                <form action="index.php" method="post">
-                    <label for="login">LOGIN</label>
-                    <input type="text" name="login" id="login" placeholder="Wpisz login" required>
+                <div class="login-form">
+                    <form action="index.php" method="post">
+                        <label for="loginUsername">LOGIN</label>
+                        <input type="text" name="login" id="loginUsername" placeholder="Wpisz login" required>
 
-                    <label for="password">HASŁO</label>
-                    <input type="password" name="password" id="password" placeholder="Wpisz hasło" required>
+                        <label for="loginPassword">HASŁO</label>
+                        <input type="password" name="password" id="loginPassword" placeholder="Wpisz hasło" required>
 
-                    <button type="submit">Zaloguj</button>
-                </form>
-                <span class="demo-hint">demo: admin / admin123</span>
+                        <button type="submit">Zaloguj</button>
+                    </form>
+                    <span class="demo-hint">Nie masz konta? <button id="registerBtn" type="button">Zarejestruj się</button></span>
+                </div>  
+
+                <div class="register-form">
+                    <form action="index.php" method="post">
+                        <label for="reigsterUsername">LOGIN</label>
+                        <input type="text" name="registerUsername" id="reigsterUsername" placeholder="Wpisz login" required>
+
+                        <label for="registerPassword">HASŁO</label>
+                        <input type="password" name="registerPassword" id="registerPassword" placeholder="Wpisz hasło" required>
+
+                        <button type="submit">Załóż konto</button>
+                    </form>
+                    <span class="demo-hint">Masz już konto? <button id="loginBtn" type="button">Zaloguj się</button></span>
+                </div>  
+
             </div>
         </main>
 
@@ -139,5 +155,6 @@
         </div>
     </footer>
 
+    <script src="script/script.js"></script>
 </body>
 </html>
