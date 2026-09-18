@@ -1,10 +1,12 @@
 CREATE TABLE IF NOT EXISTS `pojazdy` (
+    `id` INT NOT NULL AUTO_INCREMENT,
     `vin` VARCHAR(17) NOT NULL,
     `marka` VARCHAR(50) NOT NULL,
     `model` VARCHAR(50) NOT NULL,
     `rok_produkcji` INT NOT NULL,
     `kolor` VARCHAR(30) NOT NULL,
-    PRIMARY KEY (`vin`)
+    PRIMARY KEY (`id`),
+    UNIQUE KEY (`vin`)
 );
 
 INSERT INTO `pojazdy` (`vin`, `marka`, `model`, `rok_produkcji`, `kolor`) VALUES
@@ -26,3 +28,6 @@ CREATE TABLE IF NOT EXISTS `uzytkownicy` (
     `haslo` VARCHAR(255) NOT NULL,
     `rola` VARCHAR(6) NOT NULL DEFAULT 'user'
 );
+
+INSERT INTO `uzytkownicy` (`nazwa`, `haslo`, `rola`) VALUES
+('admin', '$2y$12$MD7JD.62ryE.15vZe.LksevQ2hIKPRPzHziihrytk0LeppIjEbuKG', 'admin');

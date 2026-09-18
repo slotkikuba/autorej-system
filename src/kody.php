@@ -1,11 +1,10 @@
 <?php
     session_start();
 
-    $db_host = getenv('DB_HOST') ?: 'db';
+    $db_host = getenv('DB_HOST') ?: 'localhost';
     $db_user = getenv('DB_USER') ?: 'root';
     $db_pass = getenv('DB_PASSWORD') ?: '';
     $db_name = getenv('DB_NAME') ?: 'projekt';
-
 
     $conn = mysqli_connect($db_host, $db_user, $db_pass, $db_name);
     
@@ -16,37 +15,42 @@
     function baza($conn) {
         $query = "SELECT * FROM pojazdy";
         $result = mysqli_query($conn, $query);
-        if(!$result) {
+
+        if (!$result) {
             die("Błąd w wykonaniu zapytania: " . mysqli_error($conn));
         }
+
         $numberOfRows = mysqli_num_rows($result);
+
         return [$result, $numberOfRows];
-    };
+    }
 
     function logIn($conn, $login, $password) {
         $query = "SELECT * FROM uzytkownicy WHERE nazwa = '$login'";
         $result = mysqli_query($conn, $query);
+
         $user = mysqli_fetch_assoc($result);
         
-        if($user && password_verify($password, $user['haslo'])) {
+        if ($user && password_verify($password, $user['haslo'])) {
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['role'] = $user['rola'];
             $_SESSION['flash_message'] = 'Pomyślnie zalogowano';
+
             return true;
         }
 
         return false;
-
-    };
+    }
 
     function register($conn, $login, $password) {
         $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+
         $query = "INSERT INTO uzytkownicy (nazwa, haslo) VALUES
         ('$login', '$hashedPassword')";
 
         $registered = mysqli_query($conn, $query);
 
-        if($registered) {
+        if ($registered) {
             $_SESSION['flash_message'] = 'Pomyślnie zarejestrowano';
         }
 
@@ -57,5 +61,4 @@
         session_unset();
         session_destroy();
     }
-
 ?>

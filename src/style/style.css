@@ -500,6 +500,20 @@ th {
     cursor: pointer;
 }
 
+.addNewForm {
+    display: flex;
+    flex-direction: row;
+}
+
+input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    accent-color: var(--accent-blue);
+}
+
+input[type="submit"] {
+    cursor: pointer;
+}
 
 
 
