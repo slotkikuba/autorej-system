@@ -478,10 +478,12 @@ footer {
 @keyframes popup-slide {
     0%, 100% {
         transform: translate(-50%, -140%);
+        opacity: 0;
     }
 
     15%, 85% {
         transform: translate(-50%, 0);
+        opacity: 1;
     }
 }
 

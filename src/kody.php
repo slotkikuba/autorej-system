@@ -38,8 +38,11 @@
 
             return true;
         }
+        else {
+            $_SESSION['flash_message'] = "Błędny login lub hasło";
+            return false;
+        }
 
-        return false;
     }
 
     function register($conn, $login, $password) {

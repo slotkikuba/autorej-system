@@ -11,10 +11,11 @@
         $login = $_POST['loginUsername'];
         $password = $_POST['loginPassword'];
 
-        if(logIn($conn, $login, $password)) {
-            header('Location: index.php');
-            exit;
-        }
+        logIn($conn, $login, $password);
+
+        header('Location: index.php');
+        exit;
+        
     }
 
     if(isset($_POST['registerUsername'], $_POST['registerPassword'])) {

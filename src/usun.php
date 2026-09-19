@@ -79,9 +79,7 @@
                             mysqli_query($conn, $query);
                         }
 
-                        echo($checkBoxIndex);
-
-                        
+                        // echo($checkBoxIndex);
 
                     };
                         
