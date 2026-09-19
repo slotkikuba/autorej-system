@@ -73,13 +73,12 @@
 
                     if(isset($_POST['deleteRow'])) {
                         $checkBoxes = $_POST['deleteRow'];
-                        foreach ($checkBoxes as $checkBox) {
-                            $checkBoxIndex = (int)$checkBox;
-                            $query = "DELETE FROM pojazdy WHERE id = $checkBoxIndex";
-                            mysqli_query($conn, $query);
-                        }
+                        $intTable = array_map('intval', $checkBoxes);
+                        $idList = implode(",", $intTable);
 
-                        // echo($checkBoxIndex);
+                        $query = "DELETE FROM pojazdy WHERE id IN ($idList)";
+
+                        mysqli_query($conn, $query);
 
                     };
                         

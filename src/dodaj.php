@@ -81,13 +81,17 @@
 
         <?php
 
-            if(isset($_POST['newCarInfo'])) {
-                $string = trim($_POST['newCarInfo']);
+            if(isset($_POST['addNew'])) {
+                $vin = trim($_POST['vin'] ?? '');
+                $marka = trim($_POST['marka'] ?? '');
+                $model = trim($_POST['model'] ?? '');
+                $rokProdukcji = (int) ($_POST['rok_produkcji'] ?? 0);
+                $kolor = trim($_POST['kolor'] ?? '');
 
-                $elements = preg_split('/\s+/', $string);
-                
-                $query = "INSERT INTO pojazdy (vin, marka, model, rok_produkcji, kolor) VALUES ('$elements[0]', '$elements[1]', '$elements[2]', $elements[3], '$elements[4]')";
-                mysqli_query($conn, $query);
+                $query = "INSERT INTO pojazdy (vin, marka, model, rok_produkcji, kolor) VALUES (?, ?, ?, ?, ?)";
+                $statement = mysqli_prepare($conn, $query);
+                mysqli_stmt_bind_param($statement, 'sssis', $vin, $marka, $model, $rokProdukcji, $kolor);
+                mysqli_stmt_execute($statement);
             }
 
         ?>
