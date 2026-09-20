@@ -1,4 +1,5 @@
 <?php
+    // Wspólna sesja i połączenie z bazą używane przez wszystkie podstrony.
     session_start();
 
     $db_host = getenv('DB_HOST') ?: 'localhost';
@@ -12,6 +13,7 @@
         die("Błąd połączenia z bazą: " . mysqli_connect_error());
     }
 
+    // Pobiera pojazdy oraz liczbę rekordów wyświetlaną nad tabelą.
     function baza($conn) {
         $query = "SELECT * FROM pojazdy";
         $result = mysqli_query($conn, $query);
@@ -25,6 +27,7 @@
         return [$result, $numberOfRows];
     }
 
+    // Sprawdza dane logowania i zapisuje podstawowe dane użytkownika w sesji.
     function logIn($conn, $login, $password) {
         $query = "SELECT * FROM uzytkownicy WHERE nazwa = '$login'";
         $result = mysqli_query($conn, $query);
@@ -45,6 +48,7 @@
 
     }
 
+    // Haszuje hasło przed zapisaniem nowego użytkownika w bazie.
     function register($conn, $login, $password) {
         $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
@@ -60,6 +64,7 @@
         return $registered;
     }
 
+    // Kończy sesję użytkownika i usuwa zapisane w niej dane.
     function logout() {
         session_unset();
         session_destroy();

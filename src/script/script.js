@@ -3,8 +3,7 @@ const tableRows = document.querySelectorAll(".data-table tbody tr");
 
 const tableHeaders = document.querySelectorAll("th");
 
-
-
+// Filtrowanie odbywa się po tekście całego wiersza, bez dodatkowego zapytania do serwera.
 if(searchDataInput) {
         searchDataInput.addEventListener("input", () => {
         
@@ -24,6 +23,7 @@ function sortTable(columnIndex) {
     const tbody = table.tBodies[0];
     const rows = Array.from(tbody.rows);
 
+    // Rok porównujemy liczbowo, a pozostałe kolumny zgodnie z polską kolejnością znaków.
     rows.sort((rowA, rowB) => {
         const valueA = rowA.cells[columnIndex].textContent.trim();
         const valueB = rowB.cells[columnIndex].textContent.trim();
@@ -47,6 +47,7 @@ tableHeaders.forEach((header, index) => {
     });
 });
 
+// Przełączanie formularzy logowania i rejestracji odbywa się w obrębie tego samego panelu.
 const registerForm = document.querySelector(".register-form");
 const loginForm = document.querySelector(".login-form");
 const registerButton = document.getElementById("registerBtn");

@@ -1,21 +1,19 @@
 :root {
-    /* Tła i Kontenery */
+    /* Kolory interfejsu */
     --bg-color: #0b0e14;
     --card-color: #121824;
     --input-bg: #070a0f;
     --border-color: #1f293d;
 
-    /* Teksty */
     --text-color: #f0f6fc;
     --text-muted: #8b949e;
 
-    /* Akcenty i Kolory Funkcyjne */
+    /* Akcenty i stany przycisków */
     --accent-blue: #3b82f6;      /* Aktywna zakładka, linki, słowa kluczowe */
     --accent-green: #22c55e;     /* Przycisk logowania */
     --accent-green-hover: #16a34a; /* Hover przycisku */
     
-    /* Kod / Tagi */
-    --code-bg: #0d1117;          /* Tło dla tagów plików (np. index.php) */
+    --code-bg: #0d1117;
 }
 
 * {
@@ -46,6 +44,7 @@ header {
     padding: 15px 0;
 }
 
+/* Nagłówek zawiera logo i aktualny status użytkownika. */
 .header-content {
     display: flex;
     justify-content: space-between;
@@ -127,6 +126,7 @@ header {
     gap: 20px;
 }
 
+/* Dwie kolumny panelu informacyjnego na stronie głównej. */
 .grid-2 {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -325,6 +325,7 @@ form button:hover {
     display: none;
 }
 
+/* Wspólny wygląd tabeli pojazdów na wszystkich podstronach. */
 .data-table {
     width: 100%;
     border-collapse: collapse;
@@ -423,6 +424,7 @@ footer {
     color: var(--text-muted);
 }
 
+/* Układ stron wyszukiwania, dodawania i usuwania. */
 .search-container {
     max-width: 1100px;
     margin: 0 auto;

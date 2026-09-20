@@ -1,4 +1,5 @@
 <?php
+    // Strona dodawania wymaga zalogowanego użytkownika.
     include 'kody.php';
     require_once("auth.php");
 
@@ -68,6 +69,7 @@
             <span class="section-tag">03</span>
             <h2>Dodaj pojazd</h2>
         </div>
+        <!-- Formularz zbiera komplet danych wymaganych przez tabelę pojazdy. -->
         <div class="addNewCar">
             <form method="post" class="addNewForm">
                 <input type="text" placeholder="VIN" id="searchData" name="vin">
@@ -81,17 +83,24 @@
 
         <?php
 
+            // Dane są czyszczone przed zapisem, a zapytanie korzysta z parametrów.
             if(isset($_POST['addNew'])) {
+
                 $vin = trim($_POST['vin'] ?? '');
                 $marka = trim($_POST['marka'] ?? '');
                 $model = trim($_POST['model'] ?? '');
-                $rokProdukcji = (int) ($_POST['rok_produkcji'] ?? 0);
+                $rok_produkcji = (int)trim($_POST['rok_produkcji'] ?? '');
                 $kolor = trim($_POST['kolor'] ?? '');
 
                 $query = "INSERT INTO pojazdy (vin, marka, model, rok_produkcji, kolor) VALUES (?, ?, ?, ?, ?)";
-                $statement = mysqli_prepare($conn, $query);
-                mysqli_stmt_bind_param($statement, 'sssis', $vin, $marka, $model, $rokProdukcji, $kolor);
-                mysqli_stmt_execute($statement);
+                $stmt = mysqli_prepare($conn, $query);
+
+                if($stmt) {
+                        mysqli_stmt_bind_param($stmt, "sssis", $vin, $marka, $model, $rok_produkcji, $kolor);
+                    mysqli_stmt_execute($stmt);
+                    mysqli_stmt_close($stmt);
+                }
+
             }
 
         ?>

@@ -1,12 +1,15 @@
 <?php
+    // Strona główna obsługuje logowanie, rejestrację i wyświetla bazę pojazdów.
     include 'kody.php';
 
+    // Wylogowanie kończy sesję i wraca do strony głównej.
     if(isset($_POST['logout'])) {
         logout();
         header('Location: index.php');
         exit;
     }
 
+    // Formularze logowania i rejestracji są obsługiwane przed wygenerowaniem HTML.
     if(isset($_POST['loginUsername'], $_POST['loginPassword'])) {
         $login = $_POST['loginUsername'];
         $password = $_POST['loginPassword'];
@@ -31,6 +34,7 @@
     $statusClass = "guest";
     $statusText = "GOŚĆ";
 
+    // Komunikat jest pokazywany tylko raz, po czym znika z sesji.
     $flashMessage = $_SESSION['flash_message'] ?? null;
     unset($_SESSION['flash_message']);
 
@@ -166,6 +170,7 @@
         </main>
 
         <section class="table-section card">
+            <?php // Tabela korzysta ze wspólnej funkcji pobierającej dane z bazy. ?>
             <?php [$pojazdy, $numberOfRows] = baza($conn); ?>
 
             <div class="table-header">

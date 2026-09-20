@@ -1,4 +1,5 @@
 <?php
+    // Wyszukiwanie na tej stronie działa po stronie przeglądarki na już pobranej tabeli.
     include 'kody.php';
 
     if(isset($_POST['logout'])) {
@@ -64,9 +65,11 @@
             <h2>Wyszukiwarka pojazdów</h2>
         </div>
 
+        <!-- Pole wyszukiwania filtruje wiersze tabeli przez script.js. -->
         <input type="text" placeholder="Szukaj po VIN, marce, modelu, roku lub kolorze..." id="searchData">
 
         <section class="table-section card">
+            <?php // Dane są pobierane raz, a dalsze filtrowanie odbywa się w JavaScript. ?>
             <?php [$pojazdy, $numberOfRows] = baza($conn); ?>
 
             <div class="table-header">

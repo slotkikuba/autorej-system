@@ -1,4 +1,5 @@
 <?php
+    // Kontrola z auth.php ogranicza tę stronę do administratora.
     include 'kody.php';
     require_once("auth.php");
 
@@ -71,6 +72,7 @@
             <section class="table-section card">
                 <?php
 
+                    // Usuwane są wyłącznie identyfikatory zaznaczone przez administratora.
                     if(isset($_POST['deleteRow'])) {
                         $checkBoxes = $_POST['deleteRow'];
                         $intTable = array_map('intval', $checkBoxes);
@@ -83,6 +85,7 @@
                     };
                         
                 ?>
+                <?php // Po operacji tabela jest pobierana ponownie, aby pokazać aktualny stan. ?>
                 <?php [$pojazdy, $numberOfRows] = baza($conn); ?>
 
                 <div class="table-header">
