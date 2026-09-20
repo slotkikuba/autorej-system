@@ -78,13 +78,32 @@
                         $intTable = array_map('intval', $checkBoxes);
                         $idList = implode(",", $intTable);
 
-                        $query = "DELETE FROM pojazdy WHERE id IN ($idList)";
+                        if(!empty($idList)) {
+                            
+                            $query = "DELETE FROM pojazdy WHERE id IN ($idList)";
+                            if(mysqli_query($conn, $query)) {
+                                $_SESSION['flash_message'] = "Pomyślnie usunięto rekordy (" .mysqli_affected_rows($conn) . ").";
+                            }
+                        }
 
-                        mysqli_query($conn, $query);
+                        // header("Location: " .$_SERVER['PHP_SELF']);
+                        // exit;
+
 
                     };
                         
                 ?>
+
+                <?php 
+                    $flashMessage = $_SESSION['flash_message'] ?? null;
+                    unset($_SESSION['flash_message']);
+                    if($flashMessage): 
+                ?>
+                    
+                    <div class="pop-up" role="status">
+                        <?= htmlspecialchars($flashMessage, ENT_QUOTES, 'UTF-8') ?>
+                    </div>
+                <?php endif; ?>
                 <?php // Po operacji tabela jest pobierana ponownie, aby pokazać aktualny stan. ?>
                 <?php [$pojazdy, $numberOfRows] = baza($conn); ?>
 
